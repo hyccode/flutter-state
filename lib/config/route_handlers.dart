@@ -1,8 +1,6 @@
-import 'package:flutter_state/ui/page/main/main_page.dart';
-
-import 'package:flutter/painting.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_state/ui/page/home/home_page.dart';
 import 'package:flutter_state/ui/page/setting/change_language.dart';
 import 'package:flutter_state/ui/page/setting/change_theme_color.dart';
 

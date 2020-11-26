@@ -3,12 +3,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ProviderExamplePage extends StatelessWidget {
+class ProxyProviderExamplePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Counter()),
+        ProxyProvider<Counter, Translations>(
+          update: (_, counter, __) => Translations(counter.count),
+        ),
       ],
       child: ProviderExampleResultPage(),
     );
@@ -24,30 +27,15 @@ class Counter with ChangeNotifier {
     _count++;
     notifyListeners();
   }
-  // @override
-  // String toString() {
-  //   return '$runtimeType(count: $_count)';
-  // }
 }
 
-// /// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool
-// class Counter with ChangeNotifier, DiagnosticableTreeMixin {
-//   int _count = 0;
-//
-//   int get count => _count;
-//
-//   void increment() {
-//     _count++;
-//     notifyListeners();
-//   }
-//
-//   /// Makes `Counter` readable inside the devtools by listing all of its properties
-//   @override
-//   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-//     super.debugFillProperties(properties);
-//     properties.add(IntProperty('count', count));
-//   }
-// }
+class Translations {
+  const Translations(this._value);
+
+  final int _value;
+
+  String get title => 'You clicked $_value times';
+}
 
 class ProviderExampleResultPage extends StatelessWidget {
   const ProviderExampleResultPage({Key key}) : super(key: key);
@@ -65,6 +53,7 @@ class ProviderExampleResultPage extends StatelessWidget {
           children: <Widget>[
             const Text('You have pushed the button this many times:'),
             const Count(),
+            const Count1(),
           ],
         ),
       ),
@@ -85,11 +74,21 @@ class Count extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
+
         /// Calls `context.watch` to make [Count] rebuild when [Counter] changes.
-        // '${context.read()<Counter>().count}',
-        // '${Provider.of<Counter>(context,listen: false).count}',
         '${context.watch<Counter>().count}',
-        // '${context.watch<Counter>().count}',
+        style: Theme.of(context).textTheme.headline4);
+  }
+}
+
+class Count1 extends StatelessWidget {
+  const Count1({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+        /// Calls `context.watch` to make [Count] rebuild when [Counter] changes.
+        '${context.watch<Translations>().title} ',
         style: Theme.of(context).textTheme.headline4);
   }
 }

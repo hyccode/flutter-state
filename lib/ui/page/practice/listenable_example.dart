@@ -8,7 +8,7 @@ class ProviderExamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => Counter()),
+        ChangeNotifierProvider(create: (_) => Counter(),),
       ],
       child: ProviderExampleResultPage(),
     );
@@ -86,10 +86,7 @@ class Count extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
         /// Calls `context.watch` to make [Count] rebuild when [Counter] changes.
-        // '${context.read()<Counter>().count}',
-        // '${Provider.of<Counter>(context,listen: false).count}',
         '${context.watch<Counter>().count}',
-        // '${context.watch<Counter>().count}',
         style: Theme.of(context).textTheme.headline4);
   }
 }

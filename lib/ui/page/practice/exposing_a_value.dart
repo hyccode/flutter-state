@@ -3,20 +3,54 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ProviderExamplePage extends StatelessWidget {
+// class ExposingExamplePage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MultiProvider(
+//       providers: [
+//         ChangeNotifierProvider.value( value:Counter(),),
+//       ],
+//       child: ProviderExampleResultPage(),
+//     );
+//   }
+// }
+// class ExposingExamplePage extends StatelessWidget {
+//
+//   int count;
+//
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MultiProvider(
+//       providers: [
+//         ChangeNotifierProvider(create: (_) => MyModel(count),),
+//       ],
+//       child: ProviderExampleResultPage(),
+//     );
+//   }
+// }
+
+class ExposingExamplePage extends StatelessWidget {
+
+  int count;
+
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => Counter()),
+        ProxyProvider(update: (_,count,__) => MyModel(count),),
       ],
       child: ProviderExampleResultPage(),
     );
   }
 }
 
-class Counter with ChangeNotifier {
+class MyModel with ChangeNotifier {
   int _count = 0;
+
+
+  MyModel(this._count);
 
   int get count => _count;
 
@@ -24,32 +58,10 @@ class Counter with ChangeNotifier {
     _count++;
     notifyListeners();
   }
-  // @override
-  // String toString() {
-  //   return '$runtimeType(count: $_count)';
-  // }
 }
 
-// /// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool
-// class Counter with ChangeNotifier, DiagnosticableTreeMixin {
-//   int _count = 0;
-//
-//   int get count => _count;
-//
-//   void increment() {
-//     _count++;
-//     notifyListeners();
-//   }
-//
-//   /// Makes `Counter` readable inside the devtools by listing all of its properties
-//   @override
-//   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-//     super.debugFillProperties(properties);
-//     properties.add(IntProperty('count', count));
-//   }
-// }
-
 class ProviderExampleResultPage extends StatelessWidget {
+
   const ProviderExampleResultPage({Key key}) : super(key: key);
 
   @override
@@ -65,13 +77,19 @@ class ProviderExampleResultPage extends StatelessWidget {
           children: <Widget>[
             const Text('You have pushed the button this many times:'),
             const Count(),
+            TextField(
+              controller: TextEditingController(),
+              decoration: InputDecoration(
+                  hintText: 'Contact Name'),
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         /// Calls `context.read` instead of `context.watch` so that it does not rebuild
         /// when [Counter] changes.
-        onPressed: () => context.read<Counter>().increment(),
+        onPressed: () => context.read<MyModel>().increment(),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
@@ -86,10 +104,7 @@ class Count extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
         /// Calls `context.watch` to make [Count] rebuild when [Counter] changes.
-        // '${context.read()<Counter>().count}',
-        // '${Provider.of<Counter>(context,listen: false).count}',
-        '${context.watch<Counter>().count}',
-        // '${context.watch<Counter>().count}',
+        '${context.watch<MyModel>().count}',
         style: Theme.of(context).textTheme.headline4);
   }
 }

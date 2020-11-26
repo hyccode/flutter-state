@@ -28,7 +28,10 @@ dependencies:
   provider: ^4.3.2+2
   fluro: ^1.7.7
   tuple: 1.0.3
-
+  dio: ^3.0.10
+  connectivity: ^2.0.2
+#  flutter_easyrefresh: ^2.1.6
+  pull_to_refresh: ^1.6.3
 
 
   # The following adds the Cupertino Icons font to your application.
