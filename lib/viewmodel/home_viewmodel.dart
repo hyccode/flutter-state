@@ -5,6 +5,7 @@ import 'package:flutter_state/viewmodel/base_model.dart';
 
 class HomeViewModel extends BaseViewModel {
   var list;
+  var locale;
 
   List<IconData> listIcon = [
     Icons.home_outlined,
@@ -16,6 +17,17 @@ class HomeViewModel extends BaseViewModel {
   PageController _controller = new PageController(
     initialPage: 0,
   );
+
+  HomeViewModel(this.locale) {
+    print("$locale");
+    list = [
+      S.current.home_main,
+      S.current.home_practice,
+      S.current.home_setting
+    ];
+  }
+
+  // HomeViewModel(this.locale);
 
   // factory HomeViewModel() {
   //   var list = [
@@ -32,6 +44,14 @@ class HomeViewModel extends BaseViewModel {
   get controller => _controller;
 
   get currentIndex => _currentIndex;
+
+  // get list {
+  //   // return    list = [
+  //   //     S.current.home_main,
+  //   //     S.current.home_practice,
+  //   //     S.current.home_setting
+  //   //   ];
+  // }
 
   void pageChanged(int index) {
     _currentIndex = index;

@@ -12,7 +12,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage>  with AutomaticKeepAliveClientMixin{
+class _MyHomePageState extends State<MyHomePage>
+    with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     // TODO: implement initState
@@ -25,9 +26,12 @@ class _MyHomePageState extends State<MyHomePage>  with AutomaticKeepAliveClientM
   @override
   Widget build(BuildContext context) {
     print("build整个页面重绘了");
-    return ChangeNotifierProvider(
-        create: (_) => HomeViewModel()
-          ..setList(Provider.of<CurrentLocale>(context).listHome),
+    // return ChangeNotifierProvider(
+    // create: (_) => HomeViewModel(Provider.of<CurrentLocale>(context).listHome)
+    // ..setList(Provider.of<CurrentLocale>(context).listHome),
+    return ChangeNotifierProxyProvider<CurrentLocale, HomeViewModel>(
+        //     update: (_, locale, __) => HomeViewModel(locale.listHome),
+        update: (_, locale, __) => HomeViewModel(locale.value),
         child: Consumer(
           builder: (BuildContext context, HomeViewModel homeViewModel,
               Widget child) {
@@ -44,9 +48,9 @@ class _MyHomePageState extends State<MyHomePage>  with AutomaticKeepAliveClientM
                 ],
               ),
               appBar: AppBar(
-                title: Text(Provider.of<CurrentLocale>(context, listen: false)
-                    .listHome[homeViewModel.currentIndex]),
-                // title: Text(homeViewModel.list[homeViewModel.currentIndex]),
+                // title: Text(Provider.of<CurrentLocale>(context, listen: false)
+                //     .listHome[homeViewModel.currentIndex]),
+                title: Text(homeViewModel.list[homeViewModel.currentIndex]),
               ),
               bottomNavigationBar: BottomNavigationBar(
                 unselectedItemColor: Colors.grey,

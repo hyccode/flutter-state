@@ -9,6 +9,7 @@ import 'package:flutter_state/ui/page/practice/select_example.dart';
 import 'cosumer_example.dart';
 import 'demo/SettingPageDemo.dart';
 import 'exposing_a_value.dart';
+import 'listenable_example.dart';
 import 'multiprovider.dart';
 
 class PracticePage extends StatelessWidget {
@@ -36,6 +37,11 @@ List<WidgetPoint> widgetPoints = [
     name: 'exposing a value',
     routerName: "/practice/exposing",
     buildRouter: (BuildContext context) => ExposingExamplePage(),
+  ),
+  WidgetPoint(
+    name: 'listenable a value',
+    routerName: "/practice/exposing",
+    buildRouter: (BuildContext context) => ListenableExamplePage(),
   ),
   WidgetPoint(
     name: 'MultiProvider example',

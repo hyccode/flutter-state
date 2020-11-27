@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 //   Widget build(BuildContext context) {
 //     return MultiProvider(
 //       providers: [
-//         ChangeNotifierProvider.value( value:Counter(),),
+//         ChangeNotifierProvider.value( value:MyModel(),),
 //       ],
 //       child: ProviderExampleResultPage(),
 //     );
@@ -31,24 +31,26 @@ import 'package:provider/provider.dart';
 // }
 
 class ExposingExamplePage extends StatelessWidget {
-
   int count;
-
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ProxyProvider(update: (_,count,__) => MyModel(count),),
-      ],
-      child: ProviderExampleResultPage(),
+    return ChangeNotifierProxyProvider0(
+      update: (_, __) => MyModel(count),
+      child: Column(
+        children: [
+          Expanded(child: ProviderExampleResultPage()),
+          RaisedButton(onPressed: (){
+            count=100;
+          },)
+        ],
+      ),
     );
   }
 }
 
 class MyModel with ChangeNotifier {
   int _count = 0;
-
 
   MyModel(this._count);
 
@@ -58,10 +60,15 @@ class MyModel with ChangeNotifier {
     _count++;
     notifyListeners();
   }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 }
 
 class ProviderExampleResultPage extends StatelessWidget {
-
   const ProviderExampleResultPage({Key key}) : super(key: key);
 
   @override
@@ -77,12 +84,6 @@ class ProviderExampleResultPage extends StatelessWidget {
           children: <Widget>[
             const Text('You have pushed the button this many times:'),
             const Count(),
-            TextField(
-              controller: TextEditingController(),
-              decoration: InputDecoration(
-                  hintText: 'Contact Name'),
-              textAlign: TextAlign.center,
-            ),
           ],
         ),
       ),
@@ -104,7 +105,8 @@ class Count extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
         /// Calls `context.watch` to make [Count] rebuild when [Counter] changes.
-        '${context.watch<MyModel>().count}',
+        // '${context.watch()<MyModel>().count}',
+        '${Provider.of<MyModel>(context).count}',
         style: Theme.of(context).textTheme.headline4);
   }
 }
