@@ -4,7 +4,13 @@ import 'package:flutter_state/generated/l10n.dart';
 import 'package:flutter_state/viewmodel/base_model.dart';
 
 class HomeViewModel extends BaseViewModel {
-  var list;
+  // var list ;
+
+  var list = [
+    S.current.home_main,
+    S.current.home_practice,
+    S.current.home_setting
+  ];
   var locale;
 
   List<IconData> listIcon = [
@@ -19,12 +25,13 @@ class HomeViewModel extends BaseViewModel {
   );
 
   HomeViewModel(this.locale) {
-    print("$locale");
+    print("HomeViewModel$locale");
     list = [
       S.current.home_main,
       S.current.home_practice,
       S.current.home_setting
     ];
+
   }
 
   // HomeViewModel(this.locale);

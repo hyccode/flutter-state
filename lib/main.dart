@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(
-            // primarySwatch: themeModel.value,
+            primarySwatch: themeModel.value,
           ),
           home: MyHomePage(),
           onGenerateRoute: Application.router.generator,
@@ -47,9 +47,8 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate
           ],
           supportedLocales: S.delegate.supportedLocales,
-          // locale: currentLocale.value,
+          locale: currentLocale.value,
           localeListResolutionCallback: (locales, supportedLocales) {
-            // currentLocale.initListHome();
             print('当前系统语言环境$locales支持$supportedLocales');
             return;
           },

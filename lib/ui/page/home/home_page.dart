@@ -20,7 +20,7 @@ class _MyHomePageState extends State<MyHomePage>
     super.initState();
     print("initState整个页面重绘了1");
     // Provider.of<CurrentLocale>(context).initListHome();
-    Provider.of<CurrentLocale>(context, listen: false).initListHome();
+    // Provider.of<CurrentLocale>(context, listen: false).initListHome();
   }
 
   @override
@@ -32,6 +32,7 @@ class _MyHomePageState extends State<MyHomePage>
     return ChangeNotifierProxyProvider<CurrentLocale, HomeViewModel>(
         //     update: (_, locale, __) => HomeViewModel(locale.listHome),
         update: (_, locale, __) => HomeViewModel(locale.value),
+        lazy: true,
         child: Consumer(
           builder: (BuildContext context, HomeViewModel homeViewModel,
               Widget child) {
@@ -62,15 +63,17 @@ class _MyHomePageState extends State<MyHomePage>
                   homeViewModel.controller.jumpToPage(index);
                   homeViewModel.pageChanged(index);
                 },
-                items: Provider.of<CurrentLocale>(context, listen: false)
-                    .listHome
+                // items: Provider.of<CurrentLocale>(context, listen: false)
+                //     .listHome
+                items: homeViewModel.list
                     .asMap()
                     .keys
                     .map((index) => BottomNavigationBarItem(
                           icon: Icon(homeViewModel.listIcon[index]),
                           label:
-                              Provider.of<CurrentLocale>(context, listen: false)
-                                  .listHome[index],
+                              // Provider.of<CurrentLocale>(context, listen: false)
+                              //     .listHome[index],
+                              homeViewModel.list[index],
                         ))
                     .toList(),
               ),
