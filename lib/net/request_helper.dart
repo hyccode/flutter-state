@@ -26,9 +26,10 @@ class HttpHelper {
         receiveTimeout: 30 * 1000);
     final dio = new Dio(options);
     // 添加通用拦截器
-//    for (Interceptor interceptor in getInterceptors()) {
-//      dio.interceptors.add(interceptor);
-//    }
+   // for (Interceptor interceptor in getInterceptors()) {
+   //   dio.interceptors.add(interceptor);
+   // }
+    dio.interceptors.add(LogInterceptor(responseBody: true));
     return dio;
   }
 

@@ -17,16 +17,16 @@ class MainPage extends StatelessWidget {
             dispose: (context, model) => model.dispose(),
             builder: (context, widget) => SmartRefresher(
               controller: context.watch<MainViewModel>().refreshController,
-              onRefresh: context.watch<MainViewModel>().refreshHomeListData,
+              onRefresh: context.watch<MainViewModel>().refreshToutiaoData,
               child: context.watch<MainViewModel>().isSuccess()
                   ? ListView.separated(
                       separatorBuilder: (context, idx) => Divider(),
                       itemBuilder: (context, idx) => ListTile(
                         title: Text(
-                            context.watch<MainViewModel>().historyList[idx].title),
+                            context.watch<MainViewModel>().topNewsList[idx].title),
                         onTap: () {},
                       ),
-                      itemCount: context.watch<MainViewModel>().historyList.length,
+                      itemCount: context.watch<MainViewModel>().topNewsList.length,
                     )
                   : Container(),
             ),
