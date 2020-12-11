@@ -24,10 +24,10 @@ class Counter with ChangeNotifier {
     _count++;
     notifyListeners();
   }
-  // @override
-  // String toString() {
-  //   return '$runtimeType(count: $_count)';
-  // }
+  @override
+  String toString() {
+    return '$runtimeType(count: $_count)';
+  }
 }
 
 // /// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool

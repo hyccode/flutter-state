@@ -13,6 +13,7 @@ List<SingleChildWidget> providers = [
 List<SingleChildWidget> independentServices = [
   //此是主题状态注册
   ChangeNotifierProvider(create: (_) => ThemeModel()),
+  //语言
   ChangeNotifierProvider(create: (_) => CurrentLocale()),
   ChangeNotifierProvider(create: (_) => UserModel()),
 ];

@@ -10,7 +10,18 @@ class ProxyProviderExamplePage extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => Counter()),
         ProxyProvider<Counter, Translations>(
-          update: (_, counter, __) => Translations(counter.count),
+          create: (_) => Translations(0),
+          update: (_, counter, tra) {
+            Translations(counter.count);
+            return tra;
+          },
+        ),
+        ProxyProvider3<Counter, Counter, Counter, Translations>(
+          create: (_) => Translations(0),
+          update: (_, counter, counter1, counter2, tra) {
+            Translations(counter.count);
+            return tra;
+          },
         ),
       ],
       child: ProviderExampleResultPage(),
@@ -18,19 +29,31 @@ class ProxyProviderExamplePage extends StatelessWidget {
   }
 }
 
-class Counter with ChangeNotifier {
+class Counter with ChangeNotifier implements ReassembleHandler{
   int _count = 0;
 
   int get count => _count;
+
+
 
   void increment() {
     _count++;
     notifyListeners();
   }
+
+  @override
+  void reassemble() {
+    // TODO: implement reassemble
+    // print();
+  }
+
+
 }
 
 class Translations {
-  const Translations(this._value);
+  Translations(this._value) {
+    print(_value);
+  }
 
   final int _value;
 
@@ -87,6 +110,7 @@ class Count1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
+
         /// Calls `context.watch` to make [Count] rebuild when [Counter] changes.
         '${context.watch<Translations>().title} ',
         style: Theme.of(context).textTheme.headline4);

@@ -19,16 +19,11 @@ class _MyHomePageState extends State<MyHomePage>
     // TODO: implement initState
     super.initState();
     print("initState整个页面重绘了1");
-    // Provider.of<CurrentLocale>(context).initListHome();
-    // Provider.of<CurrentLocale>(context, listen: false).initListHome();
   }
 
   @override
   Widget build(BuildContext context) {
     print("build整个页面重绘了");
-    // return ChangeNotifierProvider(
-    // create: (_) => HomeViewModel(Provider.of<CurrentLocale>(context).listHome)
-    // ..setList(Provider.of<CurrentLocale>(context).listHome),
     return ChangeNotifierProxyProvider<CurrentLocale, HomeViewModel>(
         //     update: (_, locale, __) => HomeViewModel(locale.listHome),
         update: (_, locale, __) => HomeViewModel(locale.value),
@@ -49,14 +44,11 @@ class _MyHomePageState extends State<MyHomePage>
                 ],
               ),
               appBar: AppBar(
-                // title: Text(Provider.of<CurrentLocale>(context, listen: false)
-                //     .listHome[homeViewModel.currentIndex]),
                 title: Text(homeViewModel.list[homeViewModel.currentIndex]),
               ),
               bottomNavigationBar: BottomNavigationBar(
                 unselectedItemColor: Colors.grey,
                 backgroundColor: Colors.white,
-                selectedItemColor: Colors.green,
                 currentIndex: homeViewModel.currentIndex,
                 type: BottomNavigationBarType.fixed,
                 onTap: (index) {
@@ -71,8 +63,6 @@ class _MyHomePageState extends State<MyHomePage>
                     .map((index) => BottomNavigationBarItem(
                           icon: Icon(homeViewModel.listIcon[index]),
                           label:
-                              // Provider.of<CurrentLocale>(context, listen: false)
-                              //     .listHome[index],
                               homeViewModel.list[index],
                         ))
                     .toList(),

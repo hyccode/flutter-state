@@ -26,7 +26,7 @@ dependencies:
   flutter_localizations: # Add this line
     sdk: flutter
   provider: ^4.3.2+2
-  fluro: ^1.7.7
+  fluro: ^1.7.8
   tuple: 1.0.3
   dio: ^3.0.10
   connectivity: ^2.0.2
